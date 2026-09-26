@@ -449,16 +449,3 @@ Import the collection located at:
 
 ---
 
-## 11. Screenshot Verification Checklist
-
-Capture the following screenshots for your final lab submission:
-
-1. **Gateway Health Check (`GET /health`)**: Shows status `UP` and list of registered services.
-2. **Gateway-Routed User Service (`GET /users`)**: Shows users fetched through `http://localhost:4000/users`.
-3. **Gateway-Routed Product Service (`GET /products`)**: Shows products fetched through `http://localhost:4000/products`.
-4. **Gateway-Routed Order Placement (`POST /orders`)**: Shows order created with user and product snapshots via Gateway.
-5. **Centralized 502 Bad Gateway Test**: Postman or terminal output showing HTTP `502 Bad Gateway` when downstream is down.
-6. **Service Discovery Proof**: Terminal output of `.\test_service_discovery.ps1` proving port switch without code change.
-7. **Gateway Console Logging**: Terminal window displaying Morgan logs (`[GATEWAY PROXY] GET /users → user-service`).
-8. **Cloud Deployment Dashboard**: Cloud dashboard (Render / Railway) showing deployed services and public URL.
-9. **Postman Cloud Re-Test**: Request to `{{gateway_url}}/health` and `{{gateway_url}}/users` against your live public cloud URL.
