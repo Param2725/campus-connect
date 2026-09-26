@@ -1,0 +1,15 @@
+node_modules
+student-api/node_modules
+student-client/node_modules
+student-android/.gradle
+student-android/build
+student-android/.idea
+.git
+.env
+.env.local
+student-api/.env
+student-client/.env
+screenshots
+*.log
+Lab_5_Assignment_Docker.pdf
+lab5_text.txt

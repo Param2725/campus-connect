@@ -1,0 +1,89 @@
+# ==========================================
+# CampusConnect — Root .gitignore
+# ==========================================
+
+# ─── Dependencies ───
+node_modules/
+*/node_modules/
+*/*/node_modules/
+package-lock.json.bak
+
+# ─── Environment Variables & Secrets ───
+.env
+.env.*
+!.env.example
+!.env.*.example
+*/.env
+*/.env.*
+!*/.env.example
+
+# ─── Logs & Debugging ───
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# ─── Runtime Data & State ───
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# ─── Test Coverage ───
+coverage/
+*.lcov
+.nyc_output/
+
+# ─── Build & Bundling ───
+dist/
+build/
+out/
+.next/
+.turbo/
+
+# ─── Operating System Files ───
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+[Dd]esktop.ini
+
+# ─── IDE & Editor Configurations ───
+.idea/
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.sublime-workspace
+*.sublime-project
+*.swp
+*.swo
+*~
+
+# ─── Android / Gradle (student-android) ───
+.gradle/
+**/build/
+**/local.properties
+**/captures/
+.externalNativeBuild
+.cxx/
+*.apk
+*.aab
+*.ap_
+output.json
+
+# ─── Docker ───
+.docker/
+docker-compose.override.yml
+
+# ─── Temporary & Scratch Files ───
+tmp/
+temp/
+scratch/

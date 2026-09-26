@@ -1,0 +1,227 @@
+{
+  "info": {
+    "_postman_id": "77777777-7777-4777-8777-777777777777",
+    "name": "CampusConnect API Gateway - Lab 7",
+    "description": "Lab 7: API Gateway, Configuration-Based Service Discovery & Cloud Deployment for CampusConnect Microservices.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "gateway_url",
+      "value": "http://localhost:4000",
+      "type": "string",
+      "description": "API Gateway Base URL (switch to cloud URL for Part C, e.g., https://campusconnect-gateway.onrender.com)"
+    }
+  ],
+  "item": [
+    {
+      "name": "01. Gateway Health Check (GET /health)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{gateway_url}}/health",
+          "host": ["{{gateway_url}}"],
+          "path": ["health"]
+        },
+        "description": "Gateway's own health endpoint. Reports status UP, port 4000, and dynamic routing table loaded from service registry config."
+      },
+      "response": []
+    },
+    {
+      "name": "02. Get All Users (GET /users via Gateway)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{gateway_url}}/users",
+          "host": ["{{gateway_url}}"],
+          "path": ["users"]
+        },
+        "description": "Reverse-proxied through API Gateway to User Service."
+      },
+      "response": []
+    },
+    {
+      "name": "03. Get User by ID (GET /users/101 via Gateway)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{gateway_url}}/users/101",
+          "host": ["{{gateway_url}}"],
+          "path": ["users", "101"]
+        },
+        "description": "Reverse-proxied through API Gateway to User Service by ID."
+      },
+      "response": []
+    },
+    {
+      "name": "04. Create New User (POST /users via Gateway)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Ananya Joshi\",\n  \"email\": \"ananya@campus.edu\",\n  \"role\": \"student\",\n  \"department\": \"Computer Science\"\n}"
+        },
+        "url": {
+          "raw": "{{gateway_url}}/users",
+          "host": ["{{gateway_url}}"],
+          "path": ["users"]
+        },
+        "description": "Creates a new user by reverse proxying payload to User Service."
+      },
+      "response": []
+    },
+    {
+      "name": "05. Get All Products (GET /products via Gateway)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{gateway_url}}/products",
+          "host": ["{{gateway_url}}"],
+          "path": ["products"]
+        },
+        "description": "Reverse-proxied through API Gateway to Product Service."
+      },
+      "response": []
+    },
+    {
+      "name": "06. Get Product by ID (GET /products/501 via Gateway)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{gateway_url}}/products/501",
+          "host": ["{{gateway_url}}"],
+          "path": ["products", "501"]
+        },
+        "description": "Reverse-proxied through API Gateway to Product Service by ID."
+      },
+      "response": []
+    },
+    {
+      "name": "07. Create New Product (POST /products via Gateway)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Calculus 8th Edition Textbook\",\n  \"description\": \"Standard engineering mathematics textbook in like-new condition\",\n  \"price\": 450,\n  \"category\": \"Books\",\n  \"sellerId\": \"101\"\n}"
+        },
+        "url": {
+          "raw": "{{gateway_url}}/products",
+          "host": ["{{gateway_url}}"],
+          "path": ["products"]
+        },
+        "description": "Creates a new product by reverse proxying payload to Product Service."
+      },
+      "response": []
+    },
+    {
+      "name": "08. Create Order - Full Inter-Service Chain (POST /orders via Gateway)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"userId\": \"101\",\n  \"productId\": \"501\",\n  \"quantity\": 1,\n  \"shippingAddress\": \"Hostel B, Room 204\"\n}"
+        },
+        "url": {
+          "raw": "{{gateway_url}}/orders",
+          "host": ["{{gateway_url}}"],
+          "path": ["orders"]
+        },
+        "description": "Full-stack flow: Client -> API Gateway -> Order Service -> User Service & Product Service -> MongoDB Atlas."
+      },
+      "response": []
+    },
+    {
+      "name": "09. Get All Orders (GET /orders via Gateway)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{gateway_url}}/orders",
+          "host": ["{{gateway_url}}"],
+          "path": ["orders"]
+        },
+        "description": "Reverse-proxied through API Gateway to Order Service."
+      },
+      "response": []
+    },
+    {
+      "name": "10. Get Order by ID (GET /orders/:id via Gateway)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{gateway_url}}/orders/679001",
+          "host": ["{{gateway_url}}"],
+          "path": ["orders", "679001"]
+        },
+        "description": "Reverse-proxied through API Gateway to Order Service by ID."
+      },
+      "response": []
+    },
+    {
+      "name": "11. Centralized 502/503 Error Test (Downstream Service Unreachable)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{gateway_url}}/users",
+          "host": ["{{gateway_url}}"],
+          "path": ["users"]
+        },
+        "description": "Sent when User Service is stopped. Proves the Gateway catches connection failure and returns clean 502 Bad Gateway instead of crashing or hanging."
+      },
+      "response": []
+    },
+    {
+      "name": "12. Cloud Deployment Verification (GET /health on Public URL)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{gateway_url}}/health",
+          "host": ["{{gateway_url}}"],
+          "path": ["health"]
+        },
+        "description": "Verify gateway deployed on Cloud (set {{gateway_url}} to cloud URL like https://campusconnect-gateway.onrender.com)."
+      },
+      "response": []
+    },
+    {
+      "name": "13. Cloud Full Flow (GET /users via Public Gateway URL)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{gateway_url}}/users",
+          "host": ["{{gateway_url}}"],
+          "path": ["users"]
+        },
+        "description": "Re-run in cloud: confirms Gateway -> Cloud Microservices -> MongoDB Atlas over the internet."
+      },
+      "response": []
+    }
+  ]
+}

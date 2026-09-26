@@ -1,0 +1,77 @@
+services:
+  # ─── 0. API Gateway (Single Public Entry Point) ───────────
+  api-gateway:
+    image: api-gateway:v1
+    build: ./api-gateway
+    container_name: api-gateway
+    ports:
+      - "4000:4000"
+    environment:
+      PORT: 4000
+      GATEWAY_PORT: 4000
+      USER_SERVICE_URL: http://user-service:3001
+      PRODUCT_SERVICE_URL: http://product-service:3002
+      ORDER_SERVICE_URL: http://order-service:3003
+    depends_on:
+      - user-service
+      - product-service
+      - order-service
+    networks:
+      - campus-network
+    restart: unless-stopped
+
+  # ─── 1. User Microservice (Internal Docker Network Only) ──
+  user-service:
+    image: user-service:v1
+    build: ./user-service
+    container_name: user-service
+    expose:
+      - "3001"
+    environment:
+      PORT: 3001
+      USER_SERVICE_PORT: 3001
+      MONGO_URI: mongodb+srv://parampatel2725_db_user:JyQgUM5y0Y1f7I85@cluster0.2oibzss.mongodb.net/campus_users?retryWrites=true&w=majority
+    networks:
+      - campus-network
+    restart: unless-stopped
+
+  # ─── 2. Product Microservice (Internal Docker Network Only)
+  product-service:
+    image: product-service:v1
+    build: ./product-service
+    container_name: product-service
+    expose:
+      - "3002"
+    environment:
+      PORT: 3002
+      PRODUCT_SERVICE_PORT: 3002
+      MONGO_URI: mongodb+srv://parampatel2725_db_user:JyQgUM5y0Y1f7I85@cluster0.2oibzss.mongodb.net/campus_products?retryWrites=true&w=majority
+    networks:
+      - campus-network
+    restart: unless-stopped
+
+  # ─── 3. Order Microservice (Internal Docker Network Only) ─
+  order-service:
+    image: order-service:v1
+    build: ./order-service
+    container_name: order-service
+    expose:
+      - "3003"
+    environment:
+      PORT: 3003
+      ORDER_SERVICE_PORT: 3003
+      USER_SERVICE_URL: http://user-service:3001
+      PRODUCT_SERVICE_URL: http://product-service:3002
+      MONGO_URI: mongodb+srv://parampatel2725_db_user:JyQgUM5y0Y1f7I85@cluster0.2oibzss.mongodb.net/campus_orders?retryWrites=true&w=majority
+    depends_on:
+      - user-service
+      - product-service
+    networks:
+      - campus-network
+    restart: unless-stopped
+
+# ─── Shared Bridge Network ─────────────────────────────────
+networks:
+  campus-network:
+    name: campus-network
+    driver: bridge

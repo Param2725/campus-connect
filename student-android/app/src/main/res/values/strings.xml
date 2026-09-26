@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">CampusConnect</string>
+    <string name="title_students">Enrolled Students</string>
+    <string name="title_add_student">Enroll New Student</string>
+    <string name="add_student">Add Student</string>
+    <string name="hint_name">Full Name (e.g. Aarav Patel)</string>
+    <string name="hint_email">Email Address (e.g. aarav@example.com)</string>
+    <string name="hint_course">Course / Degree (e.g. Computer Science)</string>
+    <string name="hint_semester">Semester (1–12)</string>
+    <string name="btn_submit">Submit to Server</string>
+    <string name="msg_loading">Fetching students from REST API...</string>
+    <string name="msg_empty">No student records found.</string>
+</resources>
